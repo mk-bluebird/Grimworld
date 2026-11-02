@@ -1,0 +1,21 @@
+{
+  "name": "@grimlore/parity",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "pnpm --filter @grimlore/contracts run generate:check && pnpm run test:ts && pnpm run test:lua",
+    "test:ts": "tsx --test tests/*.test.ts",
+    "test:lua": "python3 scripts/check_lua_repro.py"
+  },
+  "dependencies": {
+    "@grimlore/contracts": "workspace:*",
+    "@grimlore/validate": "workspace:*",
+    "@grimlore/placement": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
+  }
+}
