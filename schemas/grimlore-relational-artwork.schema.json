@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Grimlore Relational Artwork",
+  "type": "object",
+  "required": [
+    "id",
+    "provenance",
+    "composition",
+    "entities",
+    "relationships",
+    "appearance",
+    "constraints"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["basis", "invented_lore"],
+      "properties": {
+        "basis": {
+          "const": "user_supplied_description"
+        },
+        "invented_lore": {
+          "type": "boolean"
+        },
+        "unspecified": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "composition": {
+      "type": "object",
+      "required": [
+        "principal_subject",
+        "focal_target",
+        "eye_path",
+        "depth_layers",
+        "negative_space"
+      ],
+      "properties": {
+        "principal_subject": {
+          "type": "string"
+        },
+        "focal_target": {
+          "type": "string"
+        },
+        "eye_path": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "depth_layers": {
+          "type": "object",
+          "required": ["foreground", "middle_ground", "background"],
+          "properties": {
+            "foreground": {
+              "$ref": "#/$defs/idList"
+            },
+            "middle_ground": {
+              "$ref": "#/$defs/idList"
+            },
+            "background": {
+              "$ref": "#/$defs/idList"
+            }
+          },
+          "additionalProperties": false
+        },
+        "negative_space": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entity"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      }
+    },
+    "appearance": {
+      "type": "object",
+      "required": ["medium", "palette", "lights", "surface_treatments"],
+      "properties": {
+        "medium": {
+          "type": "string"
+        },
+        "palette": {
+          "type": "object"
+        },
+        "lights": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "surface_treatments": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "statement", "basis"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "basis": {
+            "$ref": "#/$defs/basis"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "idList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "basis": {
+      "enum": [
+        "explicit_description",
+        "derived_interpretation",
+        "implementation_choice"
+      ]
+    },
+    "entity": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "realm",
+        "placement",
+        "attributes",
+        "basis"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "realm": {
+          "enum": [
+            "living",
+            "parallel",
+            "river",
+            "boundary",
+            "unspecified"
+          ]
+        },
+        "placement": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object"
+        },
+        "basis": {
+          "$ref": "#/$defs/basis"
+        }
+      },
+      "additionalProperties": false
+    },
+    "relationship": {
+      "type": "object",
+      "required": [
+        "id",
+        "subject",
+        "predicate",
+        "object",
+        "qualifiers",
+        "basis"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "predicate": {
+          "type": "string"
+        },
+        "object": {
+          "type": "string"
+        },
+        "qualifiers": {
+          "type": "object"
+        },
+        "basis": {
+          "$ref": "#/$defs/basis"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
