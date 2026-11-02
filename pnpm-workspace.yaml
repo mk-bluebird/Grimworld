@@ -13,24 +13,23 @@ catalog:
 
 disallowWorkspaceCycles: true
 
-# Internal dependencies must explicitly use workspace:.
-# Do not implicitly substitute local packages for ordinary semver ranges.
 linkWorkspacePackages: false
 saveWorkspaceProtocol: rolling
 savePrefix: ""
 
+includeWorkspaceRoot: false
 strictPeerDependencies: true
 shamefullyHoist: false
-includeWorkspaceRoot: false
+
+engineStrict: true
+packageManagerStrict: true
+packageManagerStrictVersion: true
 
 overrides:
   typescript: "catalog:"
   ajv: "catalog:"
 
-# Available in pnpm >=10.26.
 allowBuilds:
   esbuild: true
 
-# Unknown lifecycle-script requirements become an install failure,
-# not a warning that CI can overlook.
 strictDepBuilds: true
