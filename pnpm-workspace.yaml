@@ -1,0 +1,36 @@
+packages:
+  - "packages/*"
+  - "!**/dist/**"
+  - "!**/node_modules/**"
+
+catalog:
+  typescript: "5.9.3"
+  tsx: "4.20.6"
+  ajv: "8.17.1"
+  "@sinclair/typebox": "0.34.41"
+  json-schema-to-typescript: "15.0.4"
+  "@types/node": "22.18.6"
+
+disallowWorkspaceCycles: true
+
+# Internal dependencies must explicitly use workspace:.
+# Do not implicitly substitute local packages for ordinary semver ranges.
+linkWorkspacePackages: false
+saveWorkspaceProtocol: rolling
+savePrefix: ""
+
+strictPeerDependencies: true
+shamefullyHoist: false
+includeWorkspaceRoot: false
+
+overrides:
+  typescript: "catalog:"
+  ajv: "catalog:"
+
+# Available in pnpm >=10.26.
+allowBuilds:
+  esbuild: true
+
+# Unknown lifecycle-script requirements become an install failure,
+# not a warning that CI can overlook.
+strictDepBuilds: true
