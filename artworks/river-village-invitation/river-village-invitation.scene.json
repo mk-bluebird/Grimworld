@@ -1,0 +1,539 @@
+{
+  "id": "river_village_invitation",
+  "provenance": {
+    "basis": "user_supplied_description",
+    "invented_lore": true,
+    "unspecified": [
+      "geographic location",
+      "historical period",
+      "canvas dimensions",
+      "exact village population",
+      "exact lateral displacement",
+      "which anatomical shoulder carries the nearer repair",
+      "whether the widow crosses",
+      "the purpose of the clay-house custom"
+    ]
+  },
+  "composition": {
+    "principal_subject": "widow",
+    "focal_target": "far_doorway",
+    "eye_path": [
+      "foreground_details",
+      "causeway",
+      "widow",
+      "submerged_step",
+      "far_doorway",
+      "counterpart"
+    ],
+    "depth_layers": {
+      "foreground": [
+        "foreground_details",
+        "causeway"
+      ],
+      "middle_ground": [
+        "widow",
+        "river",
+        "widow_reflection",
+        "submerged_step"
+      ],
+      "background": [
+        "near_village",
+        "far_village",
+        "near_orchard",
+        "far_orchard",
+        "near_tower",
+        "far_tower",
+        "far_mill",
+        "far_doorway",
+        "counterpart",
+        "square_figures"
+      ]
+    },
+    "negative_space": "Broad, nearly flat brown-black river surface."
+  },
+  "entities": [
+    {
+      "id": "near_village",
+      "kind": "settlement",
+      "realm": "living",
+      "placement": "Near riverbank, behind and around the widow.",
+      "attributes": {
+        "architecture": [
+          "crooked bell tower",
+          "mill",
+          "steep-gabled houses"
+        ],
+        "windows": "Occupied windows appear in the opposite-bank reflection."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "far_village",
+      "kind": "settlement",
+      "realm": "parallel",
+      "placement": "Opposite bank, laterally displaced from its expected alignment.",
+      "attributes": {
+        "architecture": [
+          "corresponding bell tower",
+          "corresponding mill",
+          "corresponding steep-gabled houses"
+        ],
+        "condition": "Mixture of meticulous maintenance and impossible extensions.",
+        "maintenance_details": [
+          "gleaming copper gutters",
+          "swept doorsteps",
+          "orderly curtains"
+        ],
+        "anomalies": [
+          {
+            "subject": "staircase",
+            "behavior": "Climbs through a roof and terminates against the underside of an enormous root."
+          },
+          {
+            "subject": "laundry",
+            "behavior": "Hangs perfectly still."
+          },
+          {
+            "subject": "fallen leaves",
+            "behavior": "Stream horizontally beneath the still laundry."
+          }
+        ]
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "near_orchard",
+      "kind": "vegetation_group",
+      "realm": "living",
+      "placement": "Near-bank village surroundings.",
+      "attributes": {
+        "season": "autumn",
+        "foliage": "Almost bare."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "far_orchard",
+      "kind": "vegetation_group",
+      "realm": "parallel",
+      "placement": "Beyond the river, above and around the far rooftops.",
+      "attributes": {
+        "orientation": "Upside down.",
+        "roots": "Spread above rooftops like branching lightning.",
+        "sky": "Pale and sunless."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "causeway",
+      "kind": "crossing",
+      "realm": "boundary",
+      "placement": "Begins among foreground reeds and leads toward the far doorway.",
+      "attributes": {
+        "material": "Worn pale stone.",
+        "width": "Narrow.",
+        "joints": "Hold gathered water.",
+        "alignment": "Does not produce a clean meeting of the two street systems."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "submerged_step",
+      "kind": "threshold",
+      "realm": "boundary",
+      "placement": "Immediately beyond the widow's planted foot.",
+      "attributes": {
+        "condition": "Submerged.",
+        "narrative_function": "Immediate point of hesitation."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "widow",
+      "kind": "character",
+      "realm": "living",
+      "placement": "Central composition, on the causeway.",
+      "attributes": {
+        "identity": "Ferryman's widow.",
+        "view": "Three-quarters from behind.",
+        "face_visibility": "Too small and shadowed for certainty.",
+        "pose": {
+          "planted_foot": "On familiar stone.",
+          "other_foot": "Hovering over the first submerged step.",
+          "head": "Inclined at precisely the counterpart's angle."
+        },
+        "coat": {
+          "material": "Heavy wool.",
+          "color": "Faded river-weed green.",
+          "hem": "Darkened by water.",
+          "repair": "Fine stitches on one unspecified shoulder.",
+          "cuff": "Fraying."
+        },
+        "lantern": {
+          "state": "Lit.",
+          "position": "Held low.",
+          "handle": "Split wood bound with a narrow red cloth strip."
+        },
+        "key": {
+          "type": "House key.",
+          "grip": "Teeth press into her glove."
+        }
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "counterpart",
+      "kind": "character",
+      "realm": "parallel",
+      "placement": "Beneath the far doorway.",
+      "attributes": {
+        "coat": "Corresponds to the widow's coat.",
+        "shoulder_repair": "On the opposite shoulder from the widow's repair.",
+        "lantern": "Unlit.",
+        "held_object": "Open lock.",
+        "head": "Inclined at precisely the widow's angle.",
+        "face_visibility": "Distant and obscure."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "far_doorway",
+      "kind": "architectural_threshold",
+      "realm": "parallel",
+      "placement": "Across the water at the end of the principal visual path.",
+      "attributes": {
+        "door": "Open.",
+        "light": "Cold pearl-colored radiance.",
+        "illumination_target": "Counterpart's collar.",
+        "face_effect": "Leaves the counterpart's face obscure."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "river",
+      "kind": "water_body",
+      "realm": "river",
+      "placement": "Between both settlements.",
+      "attributes": {
+        "surface": "Almost flat.",
+        "color": "Brown-black.",
+        "interruptions": [
+          "reeds",
+          "pale causeway stones"
+        ],
+        "reflection_policy": "Selective cross-bank substitution, not ordinary mirroring."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "widow_reflection",
+      "kind": "autonomous_reflection",
+      "realm": "river",
+      "placement": "Directly below the widow.",
+      "attributes": {
+        "pose": "Already stepped forward.",
+        "lantern": "Burns underwater.",
+        "illumination": "Reveals the faint outline of a submerged doorstep."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "foreground_details",
+      "kind": "object_group",
+      "realm": "living",
+      "placement": "Causeway margins and riverside ledge.",
+      "attributes": {
+        "reeds": "Wet and bent.",
+        "mooring_post": "Broken.",
+        "fungi": "Pale; crowded beneath the broken post.",
+        "clay_houses": {
+          "arrangement": "A row on a riverside ledge.",
+          "doorways": "Thumb-sized.",
+          "closures": "Wax plugs.",
+          "exception": "One plug has fallen out, exposing a black opening."
+        },
+        "basket": {
+          "state": "Abandoned.",
+          "contents": "Windfall pears with bruised yellow skins."
+        },
+        "custom": {
+          "suggested": true,
+          "purpose": "Unexplained."
+        }
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "near_tower",
+      "kind": "bell_tower",
+      "realm": "living",
+      "placement": "Near-bank distance.",
+      "attributes": {
+        "condition": "Weathered.",
+        "orientation": "Leans toward the river.",
+        "belfry": "Empty and open to evening."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "far_tower",
+      "kind": "bell_tower",
+      "realm": "parallel",
+      "placement": "Opposite-bank distance.",
+      "attributes": {
+        "orientation": "Straight.",
+        "bell": {
+          "color": "Dark.",
+          "position": "Outside the tower.",
+          "support": "None visible."
+        }
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "far_mill",
+      "kind": "mill",
+      "realm": "parallel",
+      "placement": "Within the far settlement.",
+      "attributes": {
+        "wheel": "Turns above the millrace without touching the water."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "square_figures",
+      "kind": "character_group",
+      "realm": "parallel",
+      "placement": "Square beneath the far bell.",
+      "attributes": {
+        "count": "Several; exact number unspecified.",
+        "silhouettes": [
+          "Stooped figure with a basket.",
+          "Broad-shouldered figure beside a cart."
+        ],
+        "attention": "Every face is turned toward the widow's doorway."
+      },
+      "basis": "explicit_description"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "village_correspondence",
+      "subject": "near_village",
+      "predicate": "has_displaced_counterpart",
+      "object": "far_village",
+      "qualifiers": {
+        "preserve": "Recognizable architectural identity.",
+        "change": "Lateral alignment and selected physical behaviors.",
+        "displacement_amount": null
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "orchard_correspondence",
+      "subject": "near_orchard",
+      "predicate": "has_inverted_counterpart",
+      "object": "far_orchard",
+      "qualifiers": {
+        "scope": "Tree orientation only; not a whole-scene inversion."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "character_correspondence",
+      "subject": "widow",
+      "predicate": "has_selectively_altered_counterpart",
+      "object": "counterpart",
+      "qualifiers": {
+        "preserve": [
+          "coat identity",
+          "head inclination"
+        ],
+        "alter": [
+          "shoulder-repair side",
+          "lantern state",
+          "key replaced by open lock"
+        ],
+        "full_body_mirror_required": false
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "near_water_image",
+      "subject": "river",
+      "predicate": "shows_beneath_near_bank",
+      "object": "far_village",
+      "qualifiers": {
+        "image": "Inverted roofs of the deserted counterpart.",
+        "scope": "Reflected appearance, not proof that the entire far village is unoccupied."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "far_water_image",
+      "subject": "river",
+      "predicate": "shows_beneath_far_bank",
+      "object": "near_village",
+      "qualifiers": {
+        "image": "Glowing occupied windows."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "reflection_divergence",
+      "subject": "widow_reflection",
+      "predicate": "anticipates_action_of",
+      "object": "widow",
+      "qualifiers": {
+        "visible_difference": "Reflection has stepped; widow still hesitates.",
+        "elapsed_time_seconds": null,
+        "mechanism": "Unspecified."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "doorway_light_path",
+      "subject": "far_doorway",
+      "predicate": "casts_reflected_path_toward",
+      "object": "widow",
+      "qualifiers": {
+        "shape": "Thin and broken.",
+        "termination": "Stops just short of her raised foot."
+      },
+      "basis": "explicit_description"
+    },
+    {
+      "id": "invitation_reading",
+      "subject": "far_doorway",
+      "predicate": "suggests_prepared_invitation_to",
+      "object": "widow",
+      "qualifiers": {
+        "supporting_motifs": [
+          "converging causeway",
+          "waiting counterpart",
+          "key and open lock",
+          "patient distant figures"
+        ],
+        "literal_cause": "Unconfirmed."
+      },
+      "basis": "derived_interpretation"
+    }
+  ],
+  "appearance": {
+    "medium": "Vast hand-painted oil canvas.",
+    "palette": {
+      "dominant": [
+        "slate",
+        "moss green",
+        "brown-black",
+        "cold pearl"
+      ],
+      "warm_accents": [
+        "amber lantern light",
+        "bruised pear yellow"
+      ],
+      "minor_accents": [
+        "red cloth binding",
+        "muted peach clouds",
+        "copper gutters"
+      ]
+    },
+    "lights": [
+      {
+        "id": "widow_lantern_light",
+        "source": "Widow's lantern.",
+        "color": "Amber.",
+        "intensity": "Modest and local.",
+        "targets": [
+          "knuckles",
+          "polished key edge",
+          "wet stone",
+          "water in stone joints"
+        ]
+      },
+      {
+        "id": "last_daylight",
+        "source": "Evening sky behind the widow.",
+        "color": "Muted peach.",
+        "intensity": "Fading."
+      },
+      {
+        "id": "doorway_radiance",
+        "source": "Far open doorway.",
+        "color": "Cold pearl.",
+        "targets": [
+          "counterpart's collar",
+          "broken reflected path"
+        ]
+      },
+      {
+        "id": "submerged_lantern_light",
+        "source": "Widow reflection's lantern.",
+        "environment": "Underwater.",
+        "targets": [
+          "submerged doorstep outline"
+        ]
+      }
+    ],
+    "surface_treatments": [
+      {
+        "target": "Lantern highlights on stone.",
+        "method": "Thick, irregular touches of paint."
+      },
+      {
+        "target": "Wool, grasses, and cuff.",
+        "method": "Fine distinguishing strokes."
+      },
+      {
+        "target": "River.",
+        "method": "Thin translucent layers.",
+        "effect": "Reflections appear suspended beneath the surface."
+      },
+      {
+        "target": "Distant architecture.",
+        "method": "Selectively softened edges."
+      },
+      {
+        "target": "Counterpart's open lock.",
+        "method": "Tiny precise brightness."
+      }
+    ]
+  },
+  "constraints": [
+    {
+      "id": "preserve_recognition",
+      "statement": "The parallel village must remain recognizable as the near village's counterpart.",
+      "basis": "explicit_description"
+    },
+    {
+      "id": "avoid_global_mirroring",
+      "statement": "Apply individual correspondences; do not mirror the complete scene as one operation.",
+      "basis": "implementation_choice"
+    },
+    {
+      "id": "preserve_hesitation",
+      "statement": "The widow remains between a planted stance and a first step.",
+      "basis": "explicit_description"
+    },
+    {
+      "id": "preserve_ambiguity",
+      "statement": "Do not resolve facial identity, ritual purpose, or the invitation's ultimate consequence.",
+      "basis": "implementation_choice"
+    },
+    {
+      "id": "avoid_total_ruin",
+      "statement": "Retain maintained buildings alongside impossible architectural extensions.",
+      "basis": "explicit_description"
+    },
+    {
+      "id": "preserve_quiet_water",
+      "statement": "Keep the river the largest quiet area rather than filling it with competing detail.",
+      "basis": "explicit_description"
+    },
+    {
+      "id": "preserve_unexplained_order",
+      "statement": "Anomalies should suggest another governing order rather than random visual chaos.",
+      "basis": "explicit_description"
+    }
+  ]
+}
