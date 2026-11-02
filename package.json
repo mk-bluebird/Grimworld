@@ -1,11 +1,33 @@
 {
-  "name": "sandbox-workspace",
+  "name": "grimlore",
+  "version": "0.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22.19 <23",
+    "pnpm": "10.32.1"
+  },
+  "config": {
+    "sovereign_attribution": "bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7",
+    "attribution_purpose": "document_credit_and_workstream_metadata_only"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "typecheck": "tsc --noEmit"
+    "build": "pnpm run typecheck:app && vite build",
+    "build:app": "pnpm run build",
+    "build:workspace": "pnpm --recursive --filter \"!grimlore\" run build",
+    "preview": "vite preview",
+    "typecheck": "pnpm run typecheck:app && pnpm run typecheck:workspace",
+    "typecheck:app": "tsc --noEmit",
+    "typecheck:workspace": "pnpm --recursive --filter \"!grimlore\" run typecheck",
+    "generate": "pnpm --filter @grimlore/contracts --fail-if-no-match run generate",
+    "generate:check": "pnpm --filter @grimlore/contracts --fail-if-no-match run generate:check",
+    "verify:generated": "pnpm run generate:check && git diff --exit-code",
+    "test": "pnpm run test:workspace",
+    "test:workspace": "pnpm --recursive --filter \"!grimlore\" run test",
+    "verify": "pnpm run verify:generated && pnpm run typecheck && pnpm run test && pnpm run build",
+    "verify:release": "pnpm run verify && pnpm run build:workspace"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
@@ -25,12 +47,14 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.7",
     "@types/canvas-confetti": "^1.6.4",
+    "@types/node": "catalog:",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/uuid": "^9.0.7",
     "@vitejs/plugin-react": "^4.3.4",
     "tailwindcss": "^4.1.7",
-    "typescript": "^5.7.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
     "vite": "^6.3.5"
   }
 }
