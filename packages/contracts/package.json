@@ -1,0 +1,28 @@
+{
+  "name": "@grimlore/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./relational-v1.schema.json": "./generated/relational-v1.schema.json",
+    "./scene": {
+      "types": "./generated/scene.generated.ts"
+    },
+    "./manifest.json": "./generated/manifest.json"
+  },
+  "scripts": {
+    "generate": "tsx scripts/generate.ts --write",
+    "generate:check": "tsx scripts/generate.ts --check",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "catalog:"
+  },
+  "devDependencies": {
+    "ajv": "catalog:",
+    "json-schema-to-typescript": "catalog:",
+    "typescript": "catalog:",
+    "tsx": "catalog:",
+    "@types/node": "catalog:"
+  }
+}
