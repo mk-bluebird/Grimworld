@@ -1,8 +1,9 @@
--- RUNTIME: Lua 5.1 / Lua 5.4 / Luau common arithmetic subset.
--- DEPENDENCIES: standard math and string functions only.
+-- RUNTIME: Lua 5.1 / Lua 5.4 / Luau common subset.
+-- DEPENDENCIES: standard math/string functions only.
 -- SOVEREIGN-ATTRIBUTION: bostrom18sd2ujv24ual9c9pshtxys6j8knh6xaead9ye7
 -- Credit/metadata only; not identity, consent, authorization, or execution.
--- Procedural-art PRNGs only. Draws are not narrative ticks.
+-- Noncryptographic procedural-art RNG. Draws are not narrative ticks.
+-- API methods use dot calls: rng.next_integer(), rng.integer(low, high).
 
 local M = {}
 
@@ -26,14 +27,15 @@ local MAX_SERIALIZED_BYTES = 96
 
 local floor = math.floor
 local huge = math.huge
+local format = string.format
 
+M.VERSION = "grimlore.rng.v2"
 M.ALGORITHM = PARK_MILLER
 M.DEFAULT_ALGORITHM = PARK_MILLER
 M.ALGORITHMS = {
     PARK_MILLER = PARK_MILLER,
     XORSHIFT32 = XORSHIFT32
 }
-M.VERSION = "grimlore.rng.v2"
 
 assert(16807.0 * 127772.0 == 2147464004.0,
     "rng: unsupported Park-Miller product arithmetic")
@@ -60,7 +62,11 @@ local function integer(value, low, high, label)
 end
 
 local function decimal(value)
-    return string.format("%.0f", value)
+    if value == 0 then
+        return "0"
+    end
+
+    return format("%.0f", value)
 end
 
 local function select_algorithm(algorithm)
@@ -76,8 +82,8 @@ local function select_algorithm(algorithm)
 end
 
 local function bxor32(a, b)
-    local result = 0
-    local bit = 1
+    local result = 0.0
+    local bit = 1.0
 
     for _ = 1, 32 do
         local aa = a % 2
@@ -106,7 +112,6 @@ end
 local function park_miller_step(state)
     local high = floor(state / PM_QUOTIENT)
     local low = state - high * PM_QUOTIENT
-
     local next_state =
         PM_MULTIPLIER * low - PM_REMAINDER * high
 
@@ -126,6 +131,7 @@ end
 local function construct(algorithm, initial_state, initial_draws)
     local is_xorshift = algorithm == XORSHIFT32
     local population = is_xorshift and XS_SIZE or PM_SIZE
+    local step = is_xorshift and xorshift32_step or park_miller_step
 
     local state = integer(
         initial_state,
@@ -135,16 +141,20 @@ local function construct(algorithm, initial_state, initial_draws)
     )
 
     local draws = 0
+
     if is_xorshift then
+        if initial_draws == nil then
+            initial_draws = 0
+        end
+
         draws = integer(
-            initial_draws or 0,
+            initial_draws,
             0,
             MAX_DRAWS,
             "draw count"
         )
     end
 
-    local step = is_xorshift and xorshift32_step or park_miller_step
     local api = {}
 
     function api.next_integer()
@@ -152,11 +162,21 @@ local function construct(algorithm, initial_state, initial_draws)
             error("rng: draw counter exhausted", 2)
         end
 
-        state = step(state)
+        local next_state = integer(
+            step(state),
+            1,
+            population,
+            "generated state"
+        )
+
+        local next_draws = draws
 
         if is_xorshift then
-            draws = draws + 1
+            next_draws = draws + 1
         end
+
+        state = next_state
+        draws = next_draws
 
         return state
     end
@@ -201,12 +221,25 @@ local function construct(algorithm, initial_state, initial_draws)
         return construct(algorithm, state, draws)
     end
 
+    function api.snapshot()
+        local result = {
+            algorithm = algorithm,
+            state = state,
+            draw_count_recorded = is_xorshift
+        }
+
+        if is_xorshift then
+            result.draw_count = draws
+        end
+
+        return result
+    end
+
     return api
 end
 
 function M.new(seed, algorithm)
-    algorithm = select_algorithm(algorithm)
-    return construct(algorithm, seed, 0)
+    return construct(select_algorithm(algorithm), seed, 0)
 end
 
 function M.new_park_miller(seed)
@@ -273,8 +306,14 @@ function M.self_test()
     end
 
     local function rejects(callback, message)
-        local ok = pcall(callback)
+        local ok, failure = pcall(callback)
         check(not ok, message)
+
+        if not ok then
+            check(type(failure) == "string"
+                and failure:find("rng:", 1, true) ~= nil,
+                "unexpected error source")
+        end
     end
 
     local pm = M.new_park_miller(1)
@@ -287,7 +326,8 @@ function M.self_test()
     }
 
     for _, expected in ipairs(pm_expected) do
-        check(pm.next_integer() == expected, "Park-Miller vector mismatch")
+        check(pm.next_integer() == expected,
+            "Park-Miller vector mismatch")
     end
 
     pm = M.new_park_miller(1)
@@ -297,7 +337,8 @@ function M.self_test()
         last = pm.next_integer()
     end
 
-    check(last == 1043618065, "Park-Miller 10000-step mismatch")
+    check(last == 1043618065,
+        "Park-Miller 10000-step mismatch")
 
     local xs = M.new_xorshift32(1)
     local xs_expected = {
@@ -309,7 +350,8 @@ function M.self_test()
     }
 
     for _, expected in ipairs(xs_expected) do
-        check(xs.next_integer() == expected, "xorshift32 vector mismatch")
+        check(xs.next_integer() == expected,
+            "xorshift32 vector mismatch")
     end
 
     for _, algorithm in ipairs({ PARK_MILLER, XORSHIFT32 }) do
@@ -328,33 +370,69 @@ function M.self_test()
 
         for _ = 1, 32 do
             local expected = original.next_integer()
+
             check(restored.next_integer() == expected,
                 "restored sequence diverged")
             check(copied.next_integer() == expected,
                 "cloned sequence diverged")
         end
 
+        local snapshot = original.snapshot()
+        local before_snapshot_edit = original.serialize()
+        snapshot.state = 0
+
+        check(original.serialize() == before_snapshot_edit,
+            "snapshot mutation changed generator")
+
         local samples = M.new(123, algorithm)
         local seen = {}
 
         for _ = 1, 1000 do
             local value = samples.integer(1, 10)
+
             check(value >= 1 and value <= 10,
                 "bounded integer escaped its range")
+
             seen[value] = true
         end
 
         for value = 1, 10 do
-            check(seen[value] == true, "range sanity check missed a value")
+            check(seen[value] == true,
+                "range sanity check missed a value")
         end
 
         local fixed = M.new(1, algorithm)
         local advanced = M.new(1, algorithm)
         advanced.next_integer()
 
-        check(fixed.integer(7, 7) == 7, "width-one result incorrect")
+        check(fixed.integer(7, 7) == 7,
+            "width-one result incorrect")
         check(fixed.serialize() == advanced.serialize(),
             "width-one request did not consume one draw")
+
+        local atomic = M.new(1, algorithm)
+        local before_invalid_request = atomic.serialize()
+
+        rejects(function()
+            atomic.integer(5, 3)
+        end, "inverted bounds accepted")
+
+        check(atomic.serialize() == before_invalid_request,
+            "invalid bounds consumed a draw")
+
+        rejects(function()
+            atomic.integer(0, 0.5)
+        end, "fractional bound accepted")
+
+        check(atomic.serialize() == before_invalid_request,
+            "fractional bound consumed a draw")
+
+        rejects(function()
+            atomic.integer(MIN_BOUND - 1, 0)
+        end, "out-of-range bound accepted")
+
+        check(atomic.serialize() == before_invalid_request,
+            "out-of-range bound consumed a draw")
 
         for _, invalid in ipairs({ 0, -1, 1.5, huge, -huge }) do
             rejects(function()
@@ -363,21 +441,30 @@ function M.self_test()
         end
 
         rejects(function()
+            M.new(nil, algorithm)
+        end, "missing seed accepted")
+
+        rejects(function()
+            M.new("1", algorithm)
+        end, "string seed accepted")
+
+        rejects(function()
             M.new(0 / 0, algorithm)
         end, "NaN seed accepted")
 
-        rejects(function()
-            M.new(1, algorithm).integer(5, 3)
-        end, "inverted bounds accepted")
-
-        rejects(function()
-            M.new(1, algorithm).integer(0, 0.5)
-        end, "fractional bound accepted")
-
-        rejects(function()
-            M.new(1, algorithm).integer(MIN_BOUND - 1, 0)
-        end, "out-of-range bound accepted")
+        local integral_float = M.new(1.0, algorithm)
+        check(integral_float.next_integer() ==
+            M.new(1, algorithm).next_integer(),
+            "integral-float seed changed sequence")
     end
+
+    local pm_boundary = M.new_park_miller(PM_SIZE)
+    check(pm_boundary.snapshot().state == PM_SIZE,
+        "valid Park-Miller boundary seed rejected")
+
+    local xs_boundary = M.new_xorshift32(XS_SIZE)
+    check(xs_boundary.snapshot().state == XS_SIZE,
+        "valid xorshift32 boundary seed rejected")
 
     rejects(function()
         M.new_park_miller(PM_MODULUS)
@@ -392,8 +479,24 @@ function M.self_test()
     end, "unknown algorithm accepted")
 
     rejects(function()
+        M.restore(nil)
+    end, "missing serialized state accepted")
+
+    rejects(function()
+        M.restore("")
+    end, "empty serialized state accepted")
+
+    rejects(function()
+        M.restore(string.rep("x", MAX_SERIALIZED_BYTES + 1))
+    end, "oversized serialized state accepted")
+
+    rejects(function()
         M.restore(PARK_MILLER .. ":01")
     end, "noncanonical Park-Miller state accepted")
+
+    rejects(function()
+        M.restore(PARK_MILLER .. ":1:0")
+    end, "extra Park-Miller field accepted")
 
     rejects(function()
         M.restore(XORSHIFT32 .. ":1:00")
@@ -419,10 +522,23 @@ function M.self_test()
     check(exhausted.serialize() == exhausted_state,
         "failed draw changed exhausted state")
 
+    local final_draw = M.restore(
+        XORSHIFT32 .. ":1:" .. decimal(MAX_DRAWS - 1)
+    )
+
+    check(final_draw.next_integer() == xs_expected[1],
+        "last permitted draw produced wrong state")
+    check(final_draw.snapshot().draw_count == MAX_DRAWS,
+        "last permitted draw did not exhaust counter")
+
+    rejects(function()
+        final_draw.next_integer()
+    end, "draw after final permitted draw succeeded")
+
     local default = M.new(1)
     check(default.algorithm() == PARK_MILLER,
         "default algorithm compatibility changed")
-    check(default.next_integer() == 16807,
+    check(default.next_integer() == pm_expected[1],
         "default generator sequence changed")
 
     return {
