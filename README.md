@@ -4,9 +4,11 @@
 
 Grimworld is a developing game-world and implementation project combining exploration, settlements, character simulation, player customization, practical skills, environmental storytelling, and bounded supernatural anomalies.
 
-Its central design commitment is **survival** with consequence: equipment wears, information arrives unevenly, relationships remember actions, and unfamiliar places remain governed by rules—even when those rules differ from expectation.
+Its central design commitment is survival with consequence: equipment wears, information arrives unevenly, relationships remember actions, and unfamiliar places remain governed by rules—even when those rules differ from expectation.
 
-Grimworld draws inspiration from Darkwood’s survival pressure and environmental uncertainty while developing its own original characters, objects, systems, and stories. It is an independent fan-work project, not an official product or an assertion that an unverified sequel exists.
+Grimworld develops its own characters, locations, customs, objects, systems, and stories. Grimbank organizes the world’s assets, while Grimlore supports its text-only artwork descriptions and narrative development.
+
+All worldbuilding, gameplay definitions, and authoring tools should remain grounded in Grimworld’s internal continuity. External reference material, when used, must remain separate from original lore and must never be presented as project canon without explicit review.
 
 ## Project Status
 
